@@ -141,7 +141,7 @@ The world must stop the Summoning Jinn.
 							.o***o**°.*oO°°#o**Oo°                                                                                              
 							*o******°°*Oo.oO*°o#o°                                                                                              
 							o*******°°o#*°o*°°OO*.                                                                                              
-					     .O*****o*°*OO°°o*°*@o*                                                                                               
+						     .O*****o*°*OO°°o*°*@o*                                                                                               
 						    °O*****o***#o°****O#*°                                                                                               
 						    oo******°°*O*°o**o@o*.                                                                                               
 						   O*******°°*o****°#O°*                                                                                                
@@ -157,7 +157,7 @@ The world must stop the Summoning Jinn.
 						  .O°°*°°°.******°                                                                                                      
 						   o°°**°°°******°                                                                                                      
 						    o*°***°.o*****                                                                                                       
-				       °*°***..o****°                                                                                                       
+						       °*°***..o****°                                                                                                       
 							**°**°.oo***°                                                                                                       
 							°*°*** *o*°*°                                                                                                       
 							 o****°°o*°*°                       .                                                                               
