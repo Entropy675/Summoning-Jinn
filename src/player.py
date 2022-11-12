@@ -1,4 +1,7 @@
-#file  -- test.py --
+#file  -- player.py --
+import pygame
+import random
+
 class ChessPiece(pygame.sprite.Sprite):
     grav = 2
     playerX = 0

@@ -1,7 +1,7 @@
-#file -- use_test.py --
+#file -- use_player.py --
 import pygame
 import random
-
+import player
 
 WIDTH = 360
 HEIGHT = 480
@@ -23,7 +23,7 @@ pygame.display.set_caption("SUMMONING JINN")
 clock = pygame.time.Clock()     ## For syncing the FPS
 
 
-sprite = ChessPiece(pygame.image.load("brownknight.png"), 30, 30)
+sprite = player.ChessPiece(pygame.image.load("brownknight.png"), 30, 30)
 
 
 ## group all the sprites together for ease of update
