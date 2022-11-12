@@ -1,5 +1,7 @@
 import pygame
 import random
+import math
+import levelEnum
 
 # pygame.sprite.Sprite
 # https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
@@ -18,11 +20,16 @@ class BasicSprite(pygame.sprite.Sprite):
     imageFramesYMax = 0;
     currentFrameX = 0;
     currentFrameY = 0;
+    
     frameWidth = 0;
     frameHeight = 0;
+    
+    offset = 0;
     nthFrame = 0; # the nth frame in which the current frame for the animation is updated
     
-    def __init__(self, image, x, y, imfmx, imfmy, imgSpeed):
+    doneFrame = False;
+    
+    def __init__(self, image, x, y, imfmx, imfmy, os, imgSpeed):
         
         # see setting up pygame.sprite.Sprite object in documentation
         super().__init__()
@@ -43,6 +50,7 @@ class BasicSprite(pygame.sprite.Sprite):
         if(imfmy == 0):
             imfmy = 1;
         
+        self.offset = os + 1;
         self.imageFramesYMax = imfmy;
         self.frameHeight = self.rect.height/imfmy; # leave as be for now
         self.frameWidth = self.rect.width/imfmx;
@@ -60,19 +68,24 @@ class BasicSprite(pygame.sprite.Sprite):
     
 
     def update(self):
+        doneFrame = False
         self.image = self.original_image.subsurface(self.rect)
         self.rect = pygame.Rect((self.currentFrameX*self.frameWidth,self.currentFrameY*self.frameHeight),(self.frameWidth, self.frameHeight));
         
         self.tempDelay += 1;
-        if(self.tempDelay % 5 == 0):
+        if(self.tempDelay % self.nthFrame == 0):
             self.tempDelay = 0
             self.currentFrameX += 1;
-            
+            #print(f"xadd {self.currentFrameX}");
         
-        
-        if(self.currentFrameX == self.imageFramesXMax):
+        if(self.currentFrameX == self.imageFramesXMax or ((self.currentFrameX == (self.imageFramesXMax - math.floor(self.offset % self.imageFramesXMax))) and (self.currentFrameY == (self.imageFramesYMax - math.floor(self.offset/self.imageFramesYMax) - 1)))):
             self.currentFrameX = 0;
             self.currentFrameY += 1;
+            #print(f"yadd {self.currentFrameY}");
+            
         
-        if(self.currentFrameY == self.imageFramesYMax):
+        if(self.currentFrameY == (self.imageFramesYMax - math.floor(self.offset/self.imageFramesYMax))):
             self.currentFrameY = 0;
+            
+            #print(f"ydone {self.currentFrameY}");
+           

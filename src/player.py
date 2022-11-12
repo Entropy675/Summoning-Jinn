@@ -7,8 +7,8 @@ import random
 # ask me before messing with this class if you don't remember how pygame works, i'll show you. - SIB
 
 class Player(pygame.sprite.Sprite):
-    plrWidth = 30
-    plrHeight = 30
+    w = 30
+    h = 30
     
     plrUp = False
     plrDown = False
@@ -87,7 +87,7 @@ class Player(pygame.sprite.Sprite):
     
     def draw(self, surf):
         #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
-        surf.blit(self.image, pygame.Rect((self.x - self.plrWidth/2, self.y - self.plrHeight/2), (self.plrWidth, self.plrHeight)))
+        surf.blit(self.image, pygame.Rect((self.x - self.w/2, self.y - self.h/2), (self.w, self.h)))
         
 
     
@@ -103,7 +103,6 @@ class Player(pygame.sprite.Sprite):
         
         if(self.currentFrameX == self.imageFramesXMax):
             self.currentFrameX = 0;
-            
         
         if self.plrUp:
             self.y -= self.plrSpeed;
