@@ -57,3 +57,6 @@ The world must stop the Summoning Jinn.
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⡷⡷⡷⠷⠁⠀⠀⠀⠀⠀⠀⠀
 
  </sup>
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Do not redistribute or use any assets or code included in this project without permission of asset owners or developers.
