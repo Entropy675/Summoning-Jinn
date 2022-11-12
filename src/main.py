@@ -23,11 +23,11 @@ pygame.display.set_caption("SUMMONING JINN")
 clock = pygame.time.Clock()     ## For syncing the FPS
 
 
-sprite = player.ChessPiece(pygame.image.load("brownknight.png"), 30, 30)
+plr = player.Player(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), 30, 30, 6) # 6 frames in idle demon
 
 
 ## group all the sprites together for ease of update
-spriteGroup = pygame.sprite.Group(sprite) # <-- put sprite in there
+# spriteGroup = pygame.sprite.Group() # <-- put normal sprites in there
 
 ## Game loop
 running = True
@@ -42,23 +42,27 @@ while running:
         elif event.type == pygame.VIDEORESIZE: # resizable fix
             screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
         elif event.type == pygame.KEYDOWN:
-            sprite.keyboardCheckDown(event.key);
+            plr.keyboardCheckDown(event.key);
         elif event.type == pygame.KEYUP:
-            sprite.keyboardCheckUp(event.key);
+            plr.keyboardCheckUp(event.key);
         
 
 
     
-    #2 Update
-    spriteGroup.update()
+    #2 Update normal sprites
+    
+    plr.update()
+    # spriteGroup.update()
 
 
     #3 Draw/render
-    screen.fill(BLACK)
-    pygame.draw.rect(screen, RED, pygame.Rect(sprite.playerX, sprite.playerY, 30, 30));
     
+    screen.fill(BLACK)
+    #pygame.draw.rect(screen, RED, pygame.Rect(plr.playerX, plr.playerY, 30, 30));
+    
+    plr.draw(screen)
+    # spriteGroup.draw(screen)
 
-    spriteGroup.draw(screen)
     ########################
 
     ### Your code comes here
