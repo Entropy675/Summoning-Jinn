@@ -1,11 +1,11 @@
-#file -- use_player.py --
 import pygame
 import random
 import player
+import basicSprite
 
 WIDTH = 360
 HEIGHT = 480
-FPS = 30
+FPS = 120 #pref
 
 # Define Colors 
 WHITE = (255, 255, 255)
@@ -23,11 +23,12 @@ pygame.display.set_caption("SUMMONING JINN")
 clock = pygame.time.Clock()     ## For syncing the FPS
 
 
-plr = player.Player(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), 30, 30, 6) # 6 frames in idle demon
-
+plr = player.Player(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), 150, 150, 6, 0, 10) # 6 frames in idle demon
+fireSpr = basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\6_flamelash_spritesheet.png"), 60, 60, 7, 7, 1);
+flameSpr = basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\7_firespin_spritesheet.png"), 160, 160, 8, 8, 1);
 
 ## group all the sprites together for ease of update
-# spriteGroup = pygame.sprite.Group() # <-- put normal sprites in there
+# spriteGroup = pygame.sprite.Group(fireSpr) # <-- put normal sprites in there
 
 ## Game loop
 running = True
@@ -35,6 +36,7 @@ while running:
 
     #1 Process input/events
     clock.tick(FPS)     ## will make the loop run at the same speed all the time
+    
     for event in pygame.event.get():        # gets all the events which have occured till now and keeps tab of them.
         ## listening for the the X button at the top
         if event.type == pygame.QUIT:
@@ -52,8 +54,9 @@ while running:
     #2 Update normal sprites
     
     plr.update()
-    # spriteGroup.update()
-
+    fireSpr.update()
+    flameSpr.update()
+    #spriteGroup.update();
 
     #3 Draw/render
     
@@ -61,8 +64,9 @@ while running:
     #pygame.draw.rect(screen, RED, pygame.Rect(plr.playerX, plr.playerY, 30, 30));
     
     plr.draw(screen)
-    # spriteGroup.draw(screen)
-
+    fireSpr.draw(screen)
+    flameSpr.draw(screen)
+    #spriteGroup.draw(screen)
     ########################
 
     ### Your code comes here
