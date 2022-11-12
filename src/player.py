@@ -75,18 +75,24 @@ class Player(pygame.sprite.Sprite):
             self.plrRight = False;
             
     
+    tempDelay = 0; # artificial delay, replace with timer for better functionality and frame independance 
     
     def draw(self, surf):
         #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
         surf.blit(self.image, pygame.Rect((self.playerX - self.plrWidth/2, self.playerY - self.plrHeight/2), (self.plrWidth, self.plrHeight)))
         
 
+    
 
     def update(self):
         self.image = self.original_image.subsurface(self.rect)
         self.rect = pygame.Rect((self.currentFrameX*self.frameWidth,0),(self.frameWidth, self.frameHeight));
         
-        self.currentFrameX += 1;
+        self.tempDelay += 1;
+        if(self.tempDelay % 3 == 0):
+            self.tempDelay = 0
+            self.currentFrameX += 1;
+        
         if(self.currentFrameX == self.imageFramesXMax):
             self.currentFrameX = 0;
             
