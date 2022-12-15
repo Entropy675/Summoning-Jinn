@@ -1,5 +1,6 @@
 import pygame
 import random
+import basicSprite
 
 # pygame.sprite.Sprite
 # https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
@@ -15,28 +16,34 @@ class Player(pygame.sprite.Sprite):
     plrRight = False
     plrLeft =  False
 
+    x = 0;
+    y = 0;
     plrSpeed = 6; # pix
     
     rect = None;
     original_image = None;
     
+    sprites = basicSprite.Group();
+    
     # assumes input image is in long strip format
     # may need to be refactored to work with 2d sprites
-    imageFramesXMax = 0;
-    imageFramesYMax = 0;
-    currentFrameX = 0;
-    currentFrameY = 0;
-    frameWidth = 0;
-    frameHeight = 0;
-    nthFrame = 0;
     
-    def __init__(self, image, x, y, imfmx, imfmy, imgSpeed):
+    
+    def __init__(self, x, y):
         
         # see setting up pygame.sprite.Sprite object in documentation
+        
         super().__init__()
+        
+        image = pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png");
+        
         self.original_image = image
         self.image = image
-        self.rect = self.image.get_rect();
+        self.rect = self.image.get_rect(); # change later to a set shape for hitbox?
+        
+        plr = player.Player(, 150, 150, 6, 0, 10) # 6 frames in idle demon      
+        
+        sprites.append(basicSprite.BasicSprite(image, x, y, 6, 0, os, imgSpeed));
         
         self.x = x;
         self.y = y;
