@@ -1,110 +1,104 @@
 import pygame
 import random
 import math
+import basicSprite
 import level
 
-# Defines the class BasicSprite which is used to create visible game objects in pygame
-# Defines the class BasicSprite which is used to create visible game objects in pygame
-class BasicSprite(pygame.sprite.Sprite):
-    # Set game object width and height
+# pygame.sprite.Sprite
+# https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
+# this class imports from the simple visible game objects base class in pygame
+# ask me before messing with this class if you don't remember how pygame works, i'll show you. - SIB
+
+class Enemy(pygame.sprite.Sprite):
     w = 30
     h = 30
     
-    # Stores the original image 
     original_image = None;
     
-    # Stores the maximum number of image frames along x and y axes
+    # assumes input image is in long strip format
+    # may need to be refactored to work with 2d sprites
     imageFramesXMax = 0;
     imageFramesYMax = 0;
-    
-    # Stores the current frame of the sprite
     currentFrameX = 0;
     currentFrameY = 0;
     
-    # Stores the number of hit points
+    pathPoints = []; # list will be of tuples (0,0) for positions the monster will path towards
+    
     hp = 0;
     
-    # Stores the width and height of each frame
     frameWidth = 0;
     frameHeight = 0;
     
-    # Stores the offset
+    # must handle this yourself until a better function is made
+    playerInRange = False;
+    
     offset = 0;
     nthFrame = 0; # the nth frame in which the current frame for the animation is updated
     
-    # Boolean indicating if the animation has finished
     doneFrame = False;
     
-    # Stores the timer
-    timer = 0;
-    
-    # Initializes the sprite
     def __init__(self, image, x, y, imfmx, imfmy, os, imgSpeed):
-        # Sets up the pygame.sprite.Sprite object
+        
+        # see setting up pygame.sprite.Sprite object in documentation
         super().__init__()
         self.original_image = image
         self.image = image
         self.rect = self.image.get_rect();
         
-        # Sets x and y coordinates
         self.x = x;
         self.y = y;
         
-        # Sets the rate at which the frame is updated
-        self.nthFrame = imgSpeed;
+        self.nthFrame = imgSpeed; #imgspeed is the 
         
-        # Sets the maximum number of frames along the x axis
-        # If it is 0, it sets it to 1
         if(imfmx == 0):
             imfmx = 1;
+            
         self.imageFramesXMax = imfmx;
         
-        # Sets the maximum number of frames along the y axis
-        # If it is 0, it sets it to 1
         if(imfmy == 0):
             imfmy = 1;
+        
         self.offset = os;
         self.imageFramesYMax = imfmy;
-        
-        # Sets the width and height of each frame
-        self.frameHeight = self.rect.height/imfmy;
+        self.frameHeight = self.rect.height/imfmy; # leave as be for now
         self.frameWidth = self.rect.width/imfmx;
-        
-        # Resets the current frame
         self.currentFrameX = 0;
         self.currentFrameY = 0;
+        
     
-    # Stores the timer
-    timer = 0;
+    tempDelay = 0; # artificial delay, replace with timer for better functionality and frame independance 
     
-    # Draws the sprite on the specified surface
     def draw(self, surf):
+        #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
         surf.blit(self.image, pygame.Rect((self.x, self.y), (self.frameWidth, self.frameHeight)))
         
 
+    #def pathToGoal():
+    
+    #def attackPathToPlayer():
     
 
-    # Updates the current frame
     def update(self):
         doneFrame = False
         self.image = self.original_image.subsurface(self.rect)
         self.rect = pygame.Rect((self.currentFrameX*self.frameWidth,self.currentFrameY*self.frameHeight),(self.frameWidth, self.frameHeight));
         
-        # Increments the timer and updates the frame accordingly
-        self.timer += 1;
-        if(self.timer % self.nthFrame == 0):
-            self.timer = 0
-            self.currentFrameX += 1;
         
-        # If the frame x index is the maximum frame x index or the offset frame x index and the frame y index is the offset frame y index, reset the frame x index
+        
+        self.tempDelay += 1;
+        if(self.tempDelay % self.nthFrame == 0):
+            self.tempDelay = 0
+            self.currentFrameX += 1;
+            #print(f"xadd {self.currentFrameX}");
+        
         if(self.currentFrameX == self.imageFramesXMax or ((self.currentFrameX == (self.imageFramesXMax - math.floor(self.offset % self.imageFramesXMax))) and (self.currentFrameY == (self.imageFramesYMax - math.floor(self.offset/self.imageFramesYMax) - 1)))):
             self.currentFrameX = 0;
             self.currentFrameY += 1;
+            #print(f"yadd {self.currentFrameY}");
             
-        # If the frame y index is the offset frame y index, reset the frame y index
+        
         if(self.currentFrameY == (self.imageFramesYMax - math.floor(self.offset/self.imageFramesYMax))):
             self.currentFrameY = 0;
-            doneFrame = True
-        
-        # Returns a boolean indicating if the animation has finished
-        return doneFrame
+            
+            #print(f"ydone {self.currentFrameY}");
+           
