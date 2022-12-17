@@ -23,7 +23,8 @@ class Player(pygame.sprite.Sprite):
     rect = None;
     original_image = None;
     
-    sprites = basicSprite.Group();
+    currentSprite = 0;
+    sprites = []; # basicSprite
     
     # assumes input image is in long strip format
     # may need to be refactored to work with 2d sprites
@@ -41,30 +42,15 @@ class Player(pygame.sprite.Sprite):
         self.image = image
         self.rect = self.image.get_rect(); # change later to a set shape for hitbox?
         
-        plr = player.Player(, 150, 150, 6, 0, 10) # 6 frames in idle demon      
+        #plr = player.Player(, 150, 150, 6, 0, 10) # 6 frames in idle demon      
         
-        sprites.append(basicSprite.BasicSprite(image, x, y, 6, 0, os, imgSpeed));
+        # add all of the player sprites to the sprite list here
+        # order added is the # position for currentSprite, starts at 0
+        self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), x, y, 6, 0, 0, self.plrSpeed));
         
         self.x = x;
         self.y = y;
-        self.nthFrame = imgSpeed; #imgspeed is the 
         
-        if(imfmx == 0):
-            imfmx = 1;
-            
-        self.imageFramesXMax = imfmx;
-        
-        if(imfmy == 0):
-            imfmy = 1;
-        
-        self.imageFramesYMax = imfmy;
-        
-        self.frameHeight = self.rect.height/imfmy; # leave as be for now
-        self.frameWidth = self.rect.width/imfmx;
-        self.currentFrameX = 0;
-        self.currentFrameY = 0;
-        
-
 
     def keyboardCheckDown(self, event):
         # if event.type == pygame.KEYDOWN:
@@ -90,26 +76,18 @@ class Player(pygame.sprite.Sprite):
             self.plrRight = False;
             
     
-    tempDelay = 0; # artificial delay, replace with timer for better functionality and frame independance 
     
     def draw(self, surf):
+        self.sprites[self.currentSprite].draw(surf, self.x, self.y);
         #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
-        surf.blit(self.image, pygame.Rect((self.x - self.w/2, self.y - self.h/2), (self.w, self.h)))
+        #surf.blit(self.image, pygame.Rect((self.x, self.y), (self.w, self.h))) #- self.w/2 - self.h/2
         
 
     
 
     def update(self):
-        self.image = self.original_image.subsurface(self.rect)
-        self.rect = pygame.Rect((self.currentFrameX*self.frameWidth,0),(self.frameWidth, self.frameHeight));
         
-        self.tempDelay += 1;
-        if(self.tempDelay % self.nthFrame == 0):
-            self.tempDelay = 0
-            self.currentFrameX += 1;
-        
-        if(self.currentFrameX == self.imageFramesXMax):
-            self.currentFrameX = 0;
+        self.sprites[self.currentSprite].update();
         
         if self.plrUp:
             self.y -= self.plrSpeed;
@@ -119,8 +97,6 @@ class Player(pygame.sprite.Sprite):
             self.x -= self.plrSpeed;
         if self.plrRight:
             self.x += self.plrSpeed;
-        
-        print(f'{self.x}, {self.y}, {self.frameWidth}')
         
         # if (self.playerY + self.plrHeight) < pygame.Surface.get_rect(pygame.display.get_surface()).height:
             # self.playerY += self.grav #gravity
