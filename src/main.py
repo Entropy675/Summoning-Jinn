@@ -23,8 +23,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 pygame.display.set_caption("SUMMONING JINN")
 clock = pygame.time.Clock()     ## For syncing the FPS
 
-plr = player.Player(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), 150, 150, 6, 0, 10) # 6 frames in idle demon
-
+plr = player.Player(30, 30);
 ## group all the sprites together for ease of update
 # spriteGroup = pygame.sprite.Group(fireSpr) # <-- put normal sprites in there
 
