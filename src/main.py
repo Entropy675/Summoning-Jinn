@@ -2,7 +2,8 @@ import pygame
 import random
 import player
 import basicSprite
-import levelEnum
+import level
+import enemy
 
 WIDTH = 360
 HEIGHT = 480
@@ -22,19 +23,13 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 pygame.display.set_caption("SUMMONING JINN")
 clock = pygame.time.Clock()     ## For syncing the FPS
 
-
-
 plr = player.Player(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), 150, 150, 6, 0, 10) # 6 frames in idle demon
-
-basicSprites = [];
-basicSprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\6_flamelash_spritesheet.png"), 60, 60, 7, 7, 3, 3));
-basicSprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\10_weaponhit_spritesheet.png"), 160, 160, 6, 6, 5, 3));
-basicSprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\13_vortex_spritesheet.png"), 230, 230, 8, 8, 4, 5));
 
 ## group all the sprites together for ease of update
 # spriteGroup = pygame.sprite.Group(fireSpr) # <-- put normal sprites in there
 
 ## Game loop
+batchDrawUpdate = level.loadAssets();
 running = True
 while running:
     #1 Process input/events
@@ -67,7 +62,7 @@ while running:
     
     plr.draw(screen)
     
-    for i in basicSprites:
+    for i in batchDrawUpdate:
         i.update();
         i.draw(screen);
     
