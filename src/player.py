@@ -5,17 +5,20 @@ import basicSprite
 # pygame.sprite.Sprite
 # https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
 # this class imports from the simple visible game objects base class in pygame
-# ask me before messing with this class if you don't remember how pygame works, i'll show you. - SIB
 
 class Player(pygame.sprite.Sprite):
     w = 30
     h = 30
     
+    fps = 60; # hardcoded fps bad, link this to the fps in main (defs file?)
+    
     plrUp = False
     plrDown = False
     plrRight = False
     plrLeft =  False
-
+    
+    facingLeft = False;
+    
     x = 0;
     y = 0;
     plrSpeed = 6; # pix
@@ -36,7 +39,8 @@ class Player(pygame.sprite.Sprite):
         
         super().__init__()
         
-        image = pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png");
+        # Summoning-Jinn\assets\GothicCharacters\GPV\Gothic-hero-Files\PNG
+        image = pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\demon-idle.png");
         
         self.original_image = image
         self.image = image
@@ -46,7 +50,7 @@ class Player(pygame.sprite.Sprite):
         
         # add all of the player sprites to the sprite list here
         # order added is the # position for currentSprite, starts at 0
-        self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), x, y, 6, 0, 0, self.plrSpeed));
+        self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), x, y, 6, 0, 0, 16 - self.plrSpeed)); # should be fine
         
         self.x = x;
         self.y = y;
@@ -58,10 +62,12 @@ class Player(pygame.sprite.Sprite):
             self.plrUp = True;
         if event == pygame.K_a:
             self.plrLeft = True;
+            self.facingLeft = False;
         if event == pygame.K_s:
             self.plrDown = True;
         if event == pygame.K_d:
             self.plrRight = True;
+            self.facingLeft = True;
 
 
     def keyboardCheckUp(self, event):
@@ -78,7 +84,10 @@ class Player(pygame.sprite.Sprite):
     
     
     def draw(self, surf):
-        self.sprites[self.currentSprite].draw(surf, self.x, self.y);
+        if(self.facingLeft):
+            self.sprites[self.currentSprite].draw(surf, self.x, self.y, True);
+        else:
+            self.sprites[self.currentSprite].draw(surf, self.x, self.y);
         #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
         #surf.blit(self.image, pygame.Rect((self.x, self.y), (self.w, self.h))) #- self.w/2 - self.h/2
         

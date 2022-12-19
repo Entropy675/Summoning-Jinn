@@ -78,8 +78,10 @@ class BasicSprite(pygame.sprite.Sprite):
     timer = 0;
     
     # Draws the sprite on the specified surface
-    def draw(self, surf , x = None, y = None):
-        if x!=None:
+    def draw(self, surf , x = None, y = None, flip = None):
+        if flip != None:
+            surf.blit(pygame.transform.flip(self.image.copy(), True, False), pygame.Rect((x, y), (self.frameWidth, self.frameHeight)))
+        elif x != None:
             surf.blit(self.image, pygame.Rect((x, y), (self.frameWidth, self.frameHeight)))
         else:
             surf.blit(self.image, pygame.Rect((self.x, self.y), (self.frameWidth, self.frameHeight)))
