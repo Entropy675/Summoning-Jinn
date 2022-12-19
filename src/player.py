@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 import basicSprite
 
 # pygame.sprite.Sprite
@@ -26,6 +27,7 @@ class Player(pygame.sprite.Sprite):
     currentSprite = 0;
     sprites = []; # basicSprite
     
+    cursorMark = None    #Sprite Click Object
     # assumes input image is in long strip format
     # may need to be refactored to work with 2d sprites
     
@@ -41,6 +43,8 @@ class Player(pygame.sprite.Sprite):
         self.original_image = image
         self.image = image
         self.rect = self.image.get_rect(); # change later to a set shape for hitbox?
+        self.cursorClicked = False
+        self.cursorMark =  basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\10_weaponhit_spritesheet.png"), 0, 0, 6, 6, 5, 1);
         
         #plr = player.Player(, 150, 150, 6, 0, 10) # 6 frames in idle demon      
         
@@ -51,8 +55,8 @@ class Player(pygame.sprite.Sprite):
         self.x = x;
         self.y = y;
         
-
-    def keyboardCheckDown(self, event):
+    
+    def keyboardCheckDown(self, event): #When key is up
         # if event.type == pygame.KEYDOWN:
         if event == pygame.K_w:
             self.plrUp = True;
@@ -64,7 +68,7 @@ class Player(pygame.sprite.Sprite):
             self.plrRight = True;
 
 
-    def keyboardCheckUp(self, event):
+    def keyboardCheckUp(self, event):   #When key is up
         # if event.type == pygame.KEYUP:
         if event == pygame.K_w:
             self.plrUp = False;
@@ -74,11 +78,23 @@ class Player(pygame.sprite.Sprite):
             self.plrDown = False;
         if event == pygame.K_d:
             self.plrRight = False;
-            
     
-    
+
+    def goToPoint(self,cord,screen):   #When key is up
+        self.cursorClicked = True
+        self.cursorMark.x = cord[0]
+        self.cursorMark.y = cord[1]
+
+
+
+
     def draw(self, surf):
         self.sprites[self.currentSprite].draw(surf, self.x, self.y);
+        if self.cursorClicked == True:
+            self.cursorMark.draw(surf,self.cursorMark.x,self.cursorMark.y)
+            
+        self.cursorClicked = False
+
         #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
         #surf.blit(self.image, pygame.Rect((self.x, self.y), (self.w, self.h))) #- self.w/2 - self.h/2
         
@@ -88,7 +104,7 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         
         self.sprites[self.currentSprite].update();
-        
+        self.cursorMark.update();
         if self.plrUp:
             self.y -= self.plrSpeed;
         if self.plrDown:
@@ -97,6 +113,8 @@ class Player(pygame.sprite.Sprite):
             self.x -= self.plrSpeed;
         if self.plrRight:
             self.x += self.plrSpeed;
+        
+        
         
         # if (self.playerY + self.plrHeight) < pygame.Surface.get_rect(pygame.display.get_surface()).height:
             # self.playerY += self.grav #gravity
