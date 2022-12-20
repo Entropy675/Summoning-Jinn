@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
     
     x = 0;
     y = 0;
-    plrSpeed = 1; # pix
+    plrSpeed = 5; # pix
     
     rect = None;
     original_image = None;
