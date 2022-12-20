@@ -79,20 +79,8 @@ class BasicSprite(pygame.sprite.Sprite):
     
     # Draws the sprite on the specified surface
     def draw(self, surf , x = None, y = None, flip = None):
-        if flip != None:
-            surf.blit(pygame.transform.flip(self.image.copy(), True, False), pygame.Rect((x, y), (self.frameWidth, self.frameHeight)))
-        elif x != None:
-            surf.blit(self.image, pygame.Rect((x, y), (self.frameWidth, self.frameHeight)))
-        else:
-            surf.blit(self.image, pygame.Rect((self.x, self.y), (self.frameWidth, self.frameHeight)))
-  
-    
-
-    # Updates the current frame
-    def update(self):
-        doneFrame = False
-        self.image = self.original_image.subsurface(self.rect)
-        self.rect = pygame.Rect((self.currentFrameX*self.frameWidth,self.currentFrameY*self.frameHeight),(self.frameWidth, self.frameHeight));
+        
+        doneFrame = False;
         
         # Increments the timer and updates the frame accordingly
         self.timer += 1;
@@ -109,6 +97,22 @@ class BasicSprite(pygame.sprite.Sprite):
         if(self.currentFrameY == (self.imageFramesYMax - math.floor(self.offset/self.imageFramesYMax))):
             self.currentFrameY = 0;
             doneFrame = True
-        
         # Returns a boolean indicating if the animation has finished
-        return doneFrame
+        # return doneFrame
+        
+        if flip != None:
+            surf.blit(pygame.transform.flip(self.image.copy(), True, False), pygame.Rect((x, y), (self.frameWidth, self.frameHeight)))
+        elif x != None:
+            surf.blit(self.image, pygame.Rect((x, y), (self.frameWidth, self.frameHeight)))
+        else:
+            surf.blit(self.image, pygame.Rect((self.x, self.y), (self.frameWidth, self.frameHeight)))
+            
+        return doneFrame;
+  
+    
+
+    # Updates the current frame
+    def update(self):
+        self.image = self.original_image.subsurface(self.rect)
+        self.rect = pygame.Rect((self.currentFrameX*self.frameWidth,self.currentFrameY*self.frameHeight),(self.frameWidth, self.frameHeight));
+        

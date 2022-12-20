@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
     
     x = 0;
     y = 0;
-    plrSpeed = 6; # pix
+    plrSpeed = 1; # pix
     
     rect = None;
     original_image = None;
@@ -50,7 +50,8 @@ class Player(pygame.sprite.Sprite):
         
         # add all of the player sprites to the sprite list here
         # order added is the # position for currentSprite, starts at 0
-        self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), x, y, 6, 0, 0, 16 - self.plrSpeed)); # should be fine
+        self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), 0, 0, 6, 0, 0, 16 - self.plrSpeed)); # should be fine
+        self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-attack.png"), -35, -30, 11, 0, 0, 16 - self.plrSpeed)); # should be fine
         
         self.x = x;
         self.y = y;
@@ -68,6 +69,12 @@ class Player(pygame.sprite.Sprite):
         if event == pygame.K_d:
             self.plrRight = True;
             self.facingLeft = True;
+        if event == pygame.K_SPACE:
+            self.currentSprite = not self.currentSprite; # really wacky
+            self.sprites[self.currentSprite].currentFrameX = 0;
+            self.sprites[self.currentSprite].currentFrameY = 0;
+
+            
 
 
     def keyboardCheckUp(self, event):
@@ -84,20 +91,29 @@ class Player(pygame.sprite.Sprite):
     
     
     def draw(self, surf):
+        
+        doneframe = None;
+        
+        self.sprites[self.currentSprite].update();
+        
         if(self.facingLeft):
-            self.sprites[self.currentSprite].draw(surf, self.x, self.y, True);
+            doneframe = self.sprites[self.currentSprite].draw(surf, self.x + self.sprites[self.currentSprite].x, self.y + self.sprites[self.currentSprite].y, True);
         else:
-            self.sprites[self.currentSprite].draw(surf, self.x, self.y);
+            doneframe = self.sprites[self.currentSprite].draw(surf, self.x + self.sprites[self.currentSprite].x + 30, self.y + self.sprites[self.currentSprite].y);
         #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
         #surf.blit(self.image, pygame.Rect((self.x, self.y), (self.w, self.h))) #- self.w/2 - self.h/2
+        
+        if(doneframe):
+            self.currentSprite = 0; #default sprite, either plr is running -> done = default sprite (idle), or plr is attacking -> done = default sprite (idle).
+            self.sprites[self.currentSprite].currentFrameX = 0;
+            self.sprites[self.currentSprite].currentFrameY = 0;
+            # this means that the player pauses for a second after either of these? (that or change this)
         
 
     
 
     def update(self):
-        
-        self.sprites[self.currentSprite].update();
-        
+
         if self.plrUp:
             self.y -= self.plrSpeed;
         if self.plrDown:
