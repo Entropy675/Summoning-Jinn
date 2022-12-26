@@ -19,6 +19,8 @@ class Player(pygame.sprite.Sprite):
 
     x = 0;
     y = 0;
+    goToX = 180
+    goToY = 240
     plrSpeed = 6; # pix
     
     rect = None;
@@ -26,6 +28,8 @@ class Player(pygame.sprite.Sprite):
     
     currentSprite = 0;
     sprites = []; # basicSprite
+
+    frameCounter = 0
     
     cursorMark = None    #Sprite Click Object
     # assumes input image is in long strip format
@@ -43,8 +47,8 @@ class Player(pygame.sprite.Sprite):
         self.original_image = image
         self.image = image
         self.rect = self.image.get_rect(); # change later to a set shape for hitbox?
-        self.cursorClicked = False
         self.cursorMark =  basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\10_weaponhit_spritesheet.png"), 0, 0, 6, 6, 5, 1);
+
         
         #plr = player.Player(, 150, 150, 6, 0, 10) # 6 frames in idle demon      
         
@@ -81,39 +85,42 @@ class Player(pygame.sprite.Sprite):
     
 
     def goToPoint(self,cord,screen):   #When key is up
-        self.cursorClicked = True
         self.cursorMark.x = cord[0]
+        self.goToX = cord[0]
         self.cursorMark.y = cord[1]
+        self.goToY = cord[1]
+        self.frameCounter = 60
+
+        #Adding to the x and y so that it goes to desired point
 
 
 
 
     def draw(self, surf):
         self.sprites[self.currentSprite].draw(surf, self.x, self.y);
-        if self.cursorClicked == True:
+        if self.frameCounter > 0:
             self.cursorMark.draw(surf,self.cursorMark.x,self.cursorMark.y)
+            self.frameCounter =- 1
             
-        self.cursorClicked = False
-
+        
+        
+        
         #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
         #surf.blit(self.image, pygame.Rect((self.x, self.y), (self.w, self.h))) #- self.w/2 - self.h/2
         
-
-    
 
     def update(self):
         
         self.sprites[self.currentSprite].update();
         self.cursorMark.update();
-        if self.plrUp:
+        if self.y > self.goToY:
             self.y -= self.plrSpeed;
-        if self.plrDown:
+        if self.y < self.goToY:
             self.y += self.plrSpeed;
-        if self.plrLeft:
+        if self.x > self.goToX:
             self.x -= self.plrSpeed;
-        if self.plrRight:
+        if self.x < self.goToX:
             self.x += self.plrSpeed;
-        
         
         
         # if (self.playerY + self.plrHeight) < pygame.Surface.get_rect(pygame.display.get_surface()).height:
