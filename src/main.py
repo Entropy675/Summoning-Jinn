@@ -46,6 +46,8 @@ while running:
             plr.keyboardCheckDown(event.key);
         elif event.type == pygame.KEYUP:
             plr.keyboardCheckUp(event.key);
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            plr.goToPoint(pygame.mouse.get_pos(),screen);
 
 
     
