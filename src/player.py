@@ -7,9 +7,6 @@ import basicSprite
 # this class imports from the simple visible game objects base class in pygame
 
 class Player(pygame.sprite.Sprite):
-    w = 30
-    h = 30
-    
     fps = 60; # hardcoded fps bad, link this to the fps in main (defs file?)
     
     plrUp = False
@@ -78,7 +75,7 @@ class Player(pygame.sprite.Sprite):
             self.plrRight = True;
             self.facingLeft = True;
         if event == pygame.K_SPACE:
-            self.currentSprite = not self.currentSprite; # really wacky
+            self.currentSprite = not self.currentSprite; # really wacky, changes (1 to 0) or (0 to 1)
             self.sprites[self.currentSprite].currentFrameX = 0;
             self.sprites[self.currentSprite].currentFrameY = 0;
 
@@ -98,10 +95,8 @@ class Player(pygame.sprite.Sprite):
     
 
     def goToPoint(self,cord,screen):   #When key is up
-        self.cursorMark.x = cord[0]
-        self.goToX = cord[0]
-        self.cursorMark.y = cord[1]
-        self.goToY = cord[1]
+        self.goToX = cord[0] #;
+        self.goToY = cord[1] #;
         self.frameCounter = 60
 
         #Adding to the x and y so that it goes to desired point
@@ -113,16 +108,16 @@ class Player(pygame.sprite.Sprite):
 
         # self.sprites[self.currentSprite].draw(surf, self.x, self.y);
         if self.frameCounter > 0:
-            self.cursorMark.draw(surf,self.cursorMark.x,self.cursorMark.y)
-            self.frameCounter =- 1
+            self.cursorMark.draw(surf, self.goToX - self.cursorMark.rect.width/2, self.goToY - self.cursorMark.rect.height/2)
+            self.frameCounter -= 1;
         doneframe = None;
         
         self.sprites[self.currentSprite].update();
         
         if(self.facingLeft):
-            doneframe = self.sprites[self.currentSprite].draw(surf, self.x + self.sprites[self.currentSprite].x, self.y + self.sprites[self.currentSprite].y, True);
+            doneframe = self.sprites[self.currentSprite].draw(surf, self.x + self.sprites[self.currentSprite].x - self.sprites[self.currentSprite].rect.width/2, self.y + self.sprites[self.currentSprite].y - self.sprites[self.currentSprite].rect.height/2, True);
         else:
-            doneframe = self.sprites[self.currentSprite].draw(surf, self.x + self.sprites[self.currentSprite].x + 30, self.y + self.sprites[self.currentSprite].y);
+            doneframe = self.sprites[self.currentSprite].draw(surf, self.x + self.sprites[self.currentSprite].x  - self.sprites[self.currentSprite].rect.width/2, self.y + self.sprites[self.currentSprite].y - self.sprites[self.currentSprite].rect.height/2);
         #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
         #surf.blit(self.image, pygame.Rect((self.x, self.y), (self.w, self.h))) #- self.w/2 - self.h/2
         

@@ -14,7 +14,7 @@ class Screen(Enum):
 def loadAssets():
     batchDrawUpdate = [];
     batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\6_flamelash_spritesheet.png"), 60, 60, 7, 7, 3, 1))
-    batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\10_weaponhit_spritesheet.png"), 160, 160, 6, 6, 5, 1)) #USE THIS
+    #batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\10_weaponhit_spritesheet.png"), 160, 160, 6, 6, 5, 1)) #USE THIS
     batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\13_vortex_spritesheet.png"), 230, 230, 8, 8, 3, 5))
     batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\14_phantom_spritesheet.png"), 500, 500, 8, 8, 3, 1))
     batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\18_midnight_spritesheet.png"), 400, 400, 8, 8, 3, 1))
