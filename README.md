@@ -5,7 +5,7 @@ In the fathomless ends of the deserts of Arabia, deep under the sandy ground, wi
 A black cloaked man stands above a blood circle. A demonic ring, made of countless sacrifices. He holds a paper
 within which lies the secrets to the world.
 	
-"Oh king of death, head me!" He screams, quitely, while chanting countless undecipherable words.
+He screams, then starts quitely chanting countless undecipherable words.
 	
 The Circle of Red flashes with an ominous glow. A hazy shape takes form, at first barely visible in the dim light, yet
 quickly it solidifies: revealing a nightmarish demon. Azargaul, the Left Fist of Hell rises to take the first steps to the end.
