@@ -1,1 +1,1 @@
-python C:\Users\sibte\Documents\GitHub\Summoning-Jinn\src\main.py
+python main.py
