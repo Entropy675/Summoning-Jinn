@@ -22,3 +22,17 @@ def loadAssets():
     batchDrawUpdate.append(enemy.Enemy(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\Ghost-Files\\PNG\\ghost-idle.png"), 100, 230, 7, 0, 0, 16))
     #assets\GothicCharacters\GPV\Ghost-Files\PNG
     return batchDrawUpdate;
+
+
+def pause(screen):
+    pygame.font.init()
+    font = pygame.font.SysFont('Comic Sans MS',115)
+    textSurface = font.render('PAUSED', True, (204, 0, 0))
+    pause = True
+    while pause:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                pause = False  
+
+        screen.blit(textSurface, (1000,500))
+        pygame.display.flip()   

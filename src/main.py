@@ -50,7 +50,8 @@ while running:
             level1X, level1Y = pygame.display.get_surface().get_size()
             level1Img = pygame.transform.scale(level1Img, (level1X, level1Y))
         elif event.type == pygame.KEYDOWN:
-            plr.keyboardCheckDown(event.key);
+            if event.key == pygame.K_ESCAPE:
+                level.pause(screen)
         elif event.type == pygame.KEYUP:
             plr.keyboardCheckUp(event.key);
         elif event.type == pygame.MOUSEBUTTONDOWN:
