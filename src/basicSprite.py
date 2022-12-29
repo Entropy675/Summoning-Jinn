@@ -6,9 +6,6 @@ import level
 # Defines the class BasicSprite which is used to create visible game objects in pygame
 # Defines the class BasicSprite which is used to create visible game objects in pygame
 class BasicSprite(pygame.sprite.Sprite):
-    # Set game object width and height
-    w = 30
-    h = 30
     
     # Stores the original image 
     original_image = None;
