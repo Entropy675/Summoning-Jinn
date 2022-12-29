@@ -29,10 +29,15 @@ def pause(screen):
     font = pygame.font.SysFont('Comic Sans MS',115)
     textSurface = font.render('PAUSED', True, (204, 0, 0))
     pause = True
+    X, Y = pygame.display.get_surface().get_size()
     while pause:
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                pause = False  
-
-        screen.blit(textSurface, (1000,500))
+            if event.type == pygame.QUIT:
+                pause = False
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pause = False
+              
+        screen.blit(textSurface, (X/2-250,Y/2))
         pygame.display.flip()   
