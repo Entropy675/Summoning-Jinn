@@ -7,6 +7,7 @@ import enemy
 
 WIDTH = 360
 HEIGHT = 480
+
 FPS = 120 #pref
 
 # Define Colors 
@@ -27,6 +28,10 @@ plr = player.Player(30, 30);
 ## group all the sprites together for ease of update
 # spriteGroup = pygame.sprite.Group(fireSpr) # <-- put normal sprites in there
 
+level1Img = pygame.image.load("..\\assets\\LevelImages\\Map1.png").convert()
+level1Img = pygame.transform.scale(level1Img, (1280, 720))
+
+
 ## Game loop
 batchDrawUpdate = level.loadAssets();
 running = True
@@ -42,8 +47,11 @@ while running:
             running = False
         elif event.type == pygame.VIDEORESIZE: # resizable fix
             screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
+            level1X, level1Y = pygame.display.get_surface().get_size()
+            level1Img = pygame.transform.scale(level1Img, (level1X, level1Y))
         elif event.type == pygame.KEYDOWN:
-            plr.keyboardCheckDown(event.key);
+            if event.key == pygame.K_ESCAPE:
+                level.pause(screen)
         elif event.type == pygame.KEYUP:
             plr.keyboardCheckUp(event.key);
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -59,6 +67,7 @@ while running:
     #3 Draw/render
     
     screen.fill(BLACK)
+    screen.blit(level1Img,(0,0))
     #pygame.draw.rect(screen, RED, pygame.Rect(plr.playerX, plr.playerY, 30, 30));
     
     plr.draw(screen)
