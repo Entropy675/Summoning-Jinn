@@ -23,11 +23,8 @@ class Enemy(entity.Entity):
         return math.abs(self.x - p.x)*math.abs(self.x - p.x) + math.abs(self.y - p.y)*math.abs(self.y - p.y); 
     
     def distToPlayer(self, plr): # dont use this if you can help it because it is slow
-        return math.sqrt(sqrdDistToPlayer(self, plr);
-    
-    def update(self):
-        pass;
-    
+        return math.sqrt(sqrdDistToPlayer(self, plr));
+
     def pathToPlayer(self):
         pass;
     
@@ -58,13 +55,3 @@ class Enemy(entity.Entity):
 
     def update(self):
         self.sprites[self.currentSprite].update();
-        if self.y > self.goToY:
-            self.y -= self.plrSpeed;
-        if self.y < self.goToY:
-            self.y += self.plrSpeed;
-        if self.x > self.goToX:
-            self.x -= self.plrSpeed;
-        if self.x < self.goToX:
-            self.x += self.plrSpeed;
-        
-           
