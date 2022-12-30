@@ -3,13 +3,10 @@ import random
 import math
 import level
 
-# Defines the class BasicSprite which is used to create visible game objects in pygame
-# Defines the class BasicSprite which is used to create visible game objects in pygame
+
+# Defines the class BasicSprite which is used to create visible game effects in pygame
+# not necessarily an entity
 class BasicSprite(pygame.sprite.Sprite):
-    # Set game object width and height
-    w = 30
-    h = 30
-    
     # Stores the original image 
     original_image = None;
     
@@ -49,6 +46,7 @@ class BasicSprite(pygame.sprite.Sprite):
         # Sets x and y coordinates
         self.x = x;
         self.y = y;
+        
         
         # Sets the rate at which the frame is updated
         self.nthFrame = imgSpeed;

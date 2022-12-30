@@ -1,30 +1,22 @@
 import pygame
 import random
 import basicSprite
+import entity
 
 # pygame.sprite.Sprite
 # https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
 # this class imports from the simple visible game objects base class in pygame
 
-class Player(pygame.sprite.Sprite):
+class Player(entity.Entity):
     fps = 60; # hardcoded fps bad, link this to the fps in main (defs file?)
     
     plrUp = False
     plrDown = False
     plrRight = False
     plrLeft =  False
-    
-    facingLeft = False;
-    
-    x = 0;
-    y = 0;
-    goToX = 180
-    goToY = 240
-    plrSpeed = 6; # pix
+
 
     
-    rect = None;
-    original_image = None;
     
     currentSprite = 0;
     sprites = []; # basicSprite
@@ -49,14 +41,14 @@ class Player(pygame.sprite.Sprite):
         self.image = image
         self.rect = self.image.get_rect(); # change later to a set shape for hitbox?
         self.cursorMark =  basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\10_weaponhit_spritesheet.png"), 0, 0, 6, 6, 5, 1);
-
+        self.isEntityInanimate = False;
         
         #plr = player.Player(, 150, 150, 6, 0, 10) # 6 frames in idle demon      
         
         # add all of the player sprites to the sprite list here
         # order added is the # position for currentSprite, starts at 0
-        self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), 0, 0, 6, 0, 0, 16 - self.plrSpeed)); # should be fine
-        self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-attack.png"), -35, -30, 11, 0, 0, 16 - self.plrSpeed)); # should be fine
+        self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), 0, 0, 6, 0, 0, 16 - self.speed)); # should be fine
+        self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-attack.png"), -35, -30, 11, 0, 0, 16 - self.speed)); # should be fine
         
         self.x = x;
         self.y = y;
@@ -97,6 +89,12 @@ class Player(pygame.sprite.Sprite):
     def goToPoint(self,cord,screen):   #When key is up
         self.goToX = cord[0] #;
         self.goToY = cord[1] #;
+        
+        if(cord[0] < self.x):
+            self.facingLeft = False;
+        else:
+            self.facingLeft = True;
+        
         self.frameCounter = 60
 
         #Adding to the x and y so that it goes to desired point
@@ -132,13 +130,13 @@ class Player(pygame.sprite.Sprite):
         self.sprites[self.currentSprite].update();
         self.cursorMark.update();
         if self.y > self.goToY:
-            self.y -= self.plrSpeed;
+            self.y -= self.speed;
         if self.y < self.goToY:
-            self.y += self.plrSpeed;
+            self.y += self.speed;
         if self.x > self.goToX:
-            self.x -= self.plrSpeed;
+            self.x -= self.speed;
         if self.x < self.goToX:
-            self.x += self.plrSpeed;
+            self.x += self.speed;
         
         
         # if (self.playerY + self.plrHeight) < pygame.Surface.get_rect(pygame.display.get_surface()).height:

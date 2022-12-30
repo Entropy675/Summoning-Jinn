@@ -29,7 +29,7 @@ plr = player.Player(30, 30);
 # spriteGroup = pygame.sprite.Group(fireSpr) # <-- put normal sprites in there
 
 level1Img = pygame.image.load("..\\assets\\LevelImages\\Map1.png").convert()
-level1Img = pygame.transform.scale(level1Img, (1280, 720))
+#level1Img = pygame.transform.scale(level1Img, (1280, 720))
 
 
 ## Game loop
@@ -47,8 +47,8 @@ while running:
             running = False
         elif event.type == pygame.VIDEORESIZE: # resizable fix
             screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
-            level1X, level1Y = pygame.display.get_surface().get_size()
-            level1Img = pygame.transform.scale(level1Img, (level1X, level1Y))
+            #level1X, level1Y = pygame.display.get_surface().get_size()
+            #level1Img = pygame.transform.scale(level1Img, (level1X, level1Y))
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 level.pause(screen)
