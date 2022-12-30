@@ -3,102 +3,55 @@ import random
 import math
 import basicSprite
 import level
-
+import entity
+import player
 # pygame.sprite.Sprite
 # https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
 # this class imports from the simple visible game objects base class in pygame
 # ask me before messing with this class if you don't remember how pygame works, i'll show you. - SIB
 
-class Enemy(pygame.sprite.Sprite):
-    w = 30
-    h = 30
-    
-    original_image = None;
-    
-    # assumes input image is in long strip format
-    # may need to be refactored to work with 2d sprites
-    imageFramesXMax = 0;
-    imageFramesYMax = 0;
-    currentFrameX = 0;
-    currentFrameY = 0;
-    
-    pathPoints = []; # list will be of tuples (0,0) for positions the monster will path towards
-    
-    hp = 0;
-    
-    frameWidth = 0;
-    frameHeight = 0;
-    
-    # must handle this yourself until a better function is made
-    playerInRange = False;
-    
-    offset = 0;
-    nthFrame = 0; # the nth frame in which the current frame for the animation is updated
-    
-    doneFrame = False;
-    
-    def __init__(self, image, x, y, imfmx, imfmy, os, imgSpeed):
-        
-        # see setting up pygame.sprite.Sprite object in documentation
-        super().__init__()
-        self.original_image = image
-        self.image = image
-        self.rect = self.image.get_rect();
-        
-        self.x = x;
-        self.y = y;
-        
-        self.nthFrame = imgSpeed; #imgspeed is the 
-        
-        if(imfmx == 0):
-            imfmx = 1;
-            
-        self.imageFramesXMax = imfmx;
-        
-        if(imfmy == 0):
-            imfmy = 1;
-        
-        self.offset = os;
-        self.imageFramesYMax = imfmy;
-        self.frameHeight = self.rect.height/imfmy; # leave as be for now
-        self.frameWidth = self.rect.width/imfmx;
-        self.currentFrameX = 0;
-        self.currentFrameY = 0;
-        
-    
-    tempDelay = 0; # artificial delay, replace with timer for better functionality and frame independance 
-    
-    def draw(self, surf):
-        #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
-        surf.blit(self.image, pygame.Rect((self.x, self.y), (self.frameWidth, self.frameHeight)))
-        
+class Enemy(entity.Entity):
 
-    #def pathToGoal():
+    currentSprite = 0;
+    sprites = []; # basicSprite
+    pathPoints = []; # location that it will go
     
-    #def attackPathToPlayer():
+    def __init__(self, x, y):
+        super().__init__() # do not create a lone instance of this class
+
+    def sqrDistToPlayer(self, plr): # use this if you can help it because sqrt is a slow operation
+        return math.abs(self.x - p.x)*math.abs(self.x - p.x) + math.abs(self.y - p.y)*math.abs(self.y - p.y); 
     
+    def distToPlayer(self, plr): # dont use this if you can help it because it is slow
+        return math.sqrt(sqrdDistToPlayer(self, plr));
+
+    def pathToPlayer(self):
+        pass;
+    
+    def pathToGoal(self):
+        pass;
+    
+    def attackBehavior(self):
+        pass;
+
+    def draw(self, surf):
+
+        doneframe = None; # doneframe returns true when done animation
+        
+        self.sprites[self.currentSprite].update();
+        
+        if(self.facingLeft):
+            doneframe = self.sprites[self.currentSprite].draw(surf, self.x + self.sprites[self.currentSprite].x - self.sprites[self.currentSprite].rect.width/2, self.y + self.sprites[self.currentSprite].y - self.sprites[self.currentSprite].rect.height/2, True);
+        else:
+            doneframe = self.sprites[self.currentSprite].draw(surf, self.x + self.sprites[self.currentSprite].x  - self.sprites[self.currentSprite].rect.width/2, self.y + self.sprites[self.currentSprite].y - self.sprites[self.currentSprite].rect.height/2);
+        #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
+        #surf.blit(self.image, pygame.Rect((self.x, self.y), (self.w, self.h))) #- self.w/2 - self.h/2
+        
+        if(doneframe):
+            self.currentSprite = 0; #default sprite, either plr is running -> done = default sprite (idle), or plr is attacking -> done = default sprite (idle).
+            self.sprites[self.currentSprite].currentFrameX = 0;
+            self.sprites[self.currentSprite].currentFrameY = 0; # resetting the current frame to the start of the animation loop after switching back to idle
+        
 
     def update(self):
-        doneFrame = False
-        self.image = self.original_image.subsurface(self.rect)
-        self.rect = pygame.Rect((self.currentFrameX*self.frameWidth,self.currentFrameY*self.frameHeight),(self.frameWidth, self.frameHeight));
-        
-        
-        
-        self.tempDelay += 1;
-        if(self.tempDelay % self.nthFrame == 0):
-            self.tempDelay = 0
-            self.currentFrameX += 1;
-            #print(f"xadd {self.currentFrameX}");
-        
-        if(self.currentFrameX == self.imageFramesXMax or ((self.currentFrameX == (self.imageFramesXMax - math.floor(self.offset % self.imageFramesXMax))) and (self.currentFrameY == (self.imageFramesYMax - math.floor(self.offset/self.imageFramesYMax) - 1)))):
-            self.currentFrameX = 0;
-            self.currentFrameY += 1;
-            #print(f"yadd {self.currentFrameY}");
-            
-        
-        if(self.currentFrameY == (self.imageFramesYMax - math.floor(self.offset/self.imageFramesYMax))):
-            self.currentFrameY = 0;
-            
-            #print(f"ydone {self.currentFrameY}");
-           
+        self.sprites[self.currentSprite].update();
