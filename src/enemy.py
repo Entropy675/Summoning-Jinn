@@ -13,6 +13,11 @@ class Enemy(entity.Entity):
 
     currentSprite = 0;
     sprites = []; # basicSprite
+    pathPoints = []; # location that it will go
+    
+    def __init__(self, x, y):
+        super().__init__() # do not create a lone instance of this class
+
     def distToPlayer(self):
         pass;
     
@@ -27,18 +32,6 @@ class Enemy(entity.Entity):
     
     def attackBehavior(self):
         pass;
-    
-    fps = 60; # hardcoded fps bad, link this to the fps in main (defs file?)
-    
-
-
-    frameCounter = 0
-    
-    
-    def __init__(self, x, y):
-        super().__init__() # do not create a lone instance of this class
-
-
 
     def draw(self, surf):
 
@@ -56,8 +49,7 @@ class Enemy(entity.Entity):
         if(doneframe):
             self.currentSprite = 0; #default sprite, either plr is running -> done = default sprite (idle), or plr is attacking -> done = default sprite (idle).
             self.sprites[self.currentSprite].currentFrameX = 0;
-            self.sprites[self.currentSprite].currentFrameY = 0;
-            # this means that the player pauses for a second after either of these? (that or change this)
+            self.sprites[self.currentSprite].currentFrameY = 0; # resetting the current frame to the start of the animation loop after switching back to idle
         
 
     def update(self):

@@ -4,23 +4,14 @@ import player
 import basicSprite
 import level
 import enemy
+import constants
 
-WIDTH = 360
-HEIGHT = 480
 
-FPS = 120 #pref
-
-# Define Colors 
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
 
 ## initialize pygame and create window
 pygame.init()
 pygame.mixer.init()  ## For sound
-screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT), pygame.RESIZABLE)
 pygame.display.set_caption("SUMMONING JINN")
 clock = pygame.time.Clock()     ## For syncing the FPS
 
@@ -37,7 +28,7 @@ batchDrawUpdate = level.loadAssets();
 running = True
 while running:
     #1 Process input/events
-    clock.tick(FPS)
+    clock.tick(constants.FPS)
     ## will make the loop run at the same speed all the time
     
     
@@ -66,7 +57,7 @@ while running:
 
     #3 Draw/render
     
-    screen.fill(BLACK)
+    screen.fill(constants.BLACK)
     screen.blit(level1Img,(0,0))
     #pygame.draw.rect(screen, RED, pygame.Rect(plr.playerX, plr.playerY, 30, 30));
     

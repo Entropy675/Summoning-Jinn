@@ -2,13 +2,13 @@ import pygame
 import random
 import basicSprite
 import entity
+import constants
 
 # pygame.sprite.Sprite
 # https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
 # this class imports from the simple visible game objects base class in pygame
 
 class Player(entity.Entity):
-    fps = 60; # hardcoded fps bad, link this to the fps in main (defs file?)
     
     plrUp = False
     plrDown = False
