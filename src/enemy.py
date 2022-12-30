@@ -4,6 +4,7 @@ import math
 import basicSprite
 import level
 import entity
+import player
 # pygame.sprite.Sprite
 # https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
 # this class imports from the simple visible game objects base class in pygame
@@ -18,8 +19,11 @@ class Enemy(entity.Entity):
     def __init__(self, x, y):
         super().__init__() # do not create a lone instance of this class
 
-    def distToPlayer(self):
-        pass;
+    def sqrDistToPlayer(self, plr): # use this if you can help it because sqrt is a slow operation
+        return math.abs(self.x - p.x)*math.abs(self.x - p.x) + math.abs(self.y - p.y)*math.abs(self.y - p.y); 
+    
+    def distToPlayer(self, plr): # dont use this if you can help it because it is slow
+        return math.sqrt(sqrdDistToPlayer(self, plr);
     
     def update(self):
         pass;
