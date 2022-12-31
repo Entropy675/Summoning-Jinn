@@ -12,6 +12,7 @@ import player
 
 class Enemy(entity.Entity):
 
+    attacking = False;
     currentSprite = 0;
     sprites = []; # basicSprite
     pathPoints = []; # location that it will go
@@ -25,10 +26,7 @@ class Enemy(entity.Entity):
     def distToPlayer(self, plr): # dont use this if you can help it because it is slow
         return math.sqrt(sqrdDistToPlayer(self, plr));
 
-    def pathToPlayer(self):
-        pass;
-    
-    def pathToGoal(self):
+    def path(self):
         pass;
     
     def attackBehavior(self):
