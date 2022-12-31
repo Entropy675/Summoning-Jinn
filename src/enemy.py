@@ -55,3 +55,12 @@ class Enemy(entity.Entity):
 
     def update(self):
         self.sprites[self.currentSprite].update();
+        if self.y > self.goToY:
+            self.y -= self.speed;
+        if self.y < self.goToY:
+            self.y += self.speed;
+        if self.x > self.goToX:
+            self.x -= self.speed;
+        if self.x < self.goToX:
+            self.x += self.speed;
+        
