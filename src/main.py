@@ -15,7 +15,7 @@ screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT), pygame.RES
 pygame.display.set_caption("SUMMONING JINN")
 clock = pygame.time.Clock()     ## For syncing the FPS
 
-plr = player.Player(30, 30);
+plr = player.Player(1000, 1000);
 ## group all the sprites together for ease of update
 # spriteGroup = pygame.sprite.Group(fireSpr) # <-- put normal sprites in there
 
