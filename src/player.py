@@ -20,9 +20,9 @@ class Player(entity.Entity):
         super().__init__()
         
         self.speed = constants.PLR_SPEED;
-        self.health = constants.PLR_MAX_HEALTH/2; # /2 for demonstration purposes
+        self.health = constants.PLR_MAX_HEALTH;
         self.maxHealth = constants.PLR_MAX_HEALTH;
-        self.mana = constants.PLR_MAX_MANA/2; # /2 for demonstration purposes
+        self.mana = constants.PLR_MAX_MANA;
         self.maxMana = constants.PLR_MAX_MANA;
         image = pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\demon-idle.png");
         
@@ -54,7 +54,6 @@ class Player(entity.Entity):
                 self.currentSprite = 1;
             self.sprites[self.currentSprite].currentFrameX = 0;
             self.sprites[self.currentSprite].currentFrameY = 0;
-            self.removeHUDsprite();
 
 
     def keyboardCheckUp(self, event): #When key is up
@@ -72,7 +71,7 @@ class Player(entity.Entity):
         
         self.frameCounter = 60
 
-    def removeHUDsprite(self):
+    def removePassPoint(self):
         self.HUDsprites.pop();
         self.escapePoints -= 1;
 
