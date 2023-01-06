@@ -1,16 +1,7 @@
-# Define screen enums
-from enum import Enum
 import basicSprite
 import pygame
 import enemy
 import goblin
-
-class Screen(Enum):
-    LOADING = 0
-    MAIN = 1
-    PAUSE = 2
-    DEATH = 3
-
 
 def loadAssets():
     batchDrawUpdate = [];
@@ -23,6 +14,7 @@ def loadAssets():
     #batchDrawUpdate.append(goblin.Goblin(pygame.image.load("..\\assets\\Sprites\\goblin1V2_summoning_jinn.png"), 700)) 
 
     #assets\GothicCharacters\GPV\Ghost-Files\PNG
+    #assets\ has all assets
     return batchDrawUpdate;
 
 

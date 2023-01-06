@@ -19,6 +19,6 @@ class Entity(pygame.sprite.Sprite):
     y = 0;    
     goToX = 0;
     goToY = 0;
-    speed = 6; # pix
+    speed = 0; # pix
     rect = None;
     original_image = None;
