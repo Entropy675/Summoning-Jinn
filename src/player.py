@@ -7,7 +7,10 @@ import constants
 class Player(entity.Entity):
     currentSprite = 0;
     sprites = []; # basicSprite
-
+    
+    HUDsprites = [];
+    
+    escapePoints = 15;
     frameCounter = 0
     
     cursorMark = None    #Sprite Click Object
@@ -17,6 +20,10 @@ class Player(entity.Entity):
         super().__init__()
         
         self.speed = constants.PLR_SPEED;
+        self.health = constants.PLR_MAX_HEALTH;
+        self.maxHealth = constants.PLR_MAX_HEALTH;
+        self.mana = constants.PLR_MAX_MANA;
+        self.maxMana = constants.PLR_MAX_MANA;
         image = pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\demon-idle.png");
         
         self.image = image
@@ -29,6 +36,14 @@ class Player(entity.Entity):
         self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-idle.png"), 0, 0, 6, 0, 0, constants.PLR_SPEED_BASE_LIMIT - self.speed));
         self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-attack.png"), -35, -30, 11, 0, 0, constants.PLR_SPEED_BASE_LIMIT - self.speed));
         
+        # lets loed in the players HUD here too
+        for i in range(self.escapePoints):
+            self.HUDsprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\sprites\\healthAnimation.png"), random.randint(0, 10), random.randint(0, 10), 11, 11, 1, 4));
+            self.HUDsprites[i].currentFrameX = random.randint(0, 10)
+            self.HUDsprites[i].currentFrameY = random.randint(0, 10)
+        
+        self.goToX = x;
+        self.goToY = y;
         self.x = x;
         self.y = y;
         
@@ -39,8 +54,6 @@ class Player(entity.Entity):
                 self.currentSprite = 1;
             self.sprites[self.currentSprite].currentFrameX = 0;
             self.sprites[self.currentSprite].currentFrameY = 0;
-
-            
 
 
     def keyboardCheckUp(self, event): #When key is up
@@ -58,11 +71,39 @@ class Player(entity.Entity):
         
         self.frameCounter = 60
 
+    def removePassPoint(self):
+        self.HUDsprites.pop();
+        self.escapePoints -= 1;
 
     def drawHUD(self, surf):
-        pass;
+        # Create a surface for the transparent rect
+        
+        localZero = (0, surf.get_height() - 60); ## position for the top left corner of the HUD shadow box
+        
+        transparent_rect = pygame.Surface((300, 60))
+        transparent_rect.fill(constants.BLACK)  # blk color
+        transparent_rect.set_alpha(192)  # 75% alpha
+
+        # Draw the transparent rect on the surface
+        surf.blit(transparent_rect, (localZero[0], localZero[1]))
+
+        font = pygame.font.Font(None, 36)  # use default font, size 36
+        textsurf = font.render("x" + str(self.escapePoints), True, constants.WHITE)
+        
+        surf.blit(textsurf, (localZero[0] + 40, localZero[1] + 30));
+        
+        pygame.draw.rect(surf, constants.BLUE, pygame.Rect(85, localZero[1] + 20, 200*(self.mana/self.maxMana), 12))
+        pygame.draw.rect(surf, constants.BLACK, pygame.Rect(85, localZero[1] + 20, 200, 12), 1)
+        
+        pygame.draw.rect(surf, constants.RED, pygame.Rect(85, localZero[1] + 40, 200*(self.health/self.maxHealth), 12))
+        pygame.draw.rect(surf, constants.BLACK, pygame.Rect(85, localZero[1] + 40, 200, 12), 1)
+        
+        for i in self.HUDsprites:
+            i.draw(surf,localZero[0] - 20 + i.x, localZero[1] -27 + i.y);
 
     def draw(self, surf):
+    
+        
         if self.frameCounter > 0:
             self.cursorMark.draw(surf, self.goToX - self.cursorMark.rect.width/2, self.goToY - self.cursorMark.rect.height/2)
             self.frameCounter -= 1;
@@ -82,6 +123,8 @@ class Player(entity.Entity):
         
 
     def update(self):
+        for i in self.HUDsprites:
+            i.update();
         self.sprites[self.currentSprite].update();
         self.cursorMark.update();
         if self.y > self.goToY:
