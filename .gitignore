@@ -6,3 +6,6 @@ src/__pycache__/entity.cpython-310.pyc
 src/__pycache__/enemy.cpython-310.pyc
 src/__pycache__/constants.cpython-310.pyc
 src/__pycache__/basicSprite.cpython-310.pyc
+src/__pycache__/player.cpython-310.pyc
+src/__pycache__/level.cpython-310.pyc
+*.pyc

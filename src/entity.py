@@ -12,6 +12,7 @@ class Entity(pygame.sprite.Sprite):
     health = 0;
     maxHealth = 0;
     mana = 0;
+    maxMana = 0;
     healthbarpos = pygame.math.Vector2(0, 0) # use vectors to represent points
     isEntityInanimate = True;
     facingLeft = False;
