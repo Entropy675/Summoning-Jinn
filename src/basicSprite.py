@@ -99,7 +99,6 @@ class BasicSprite(pygame.sprite.Sprite):
         if flip != None:
             surf.blit(pygame.transform.flip(self.image.copy(), True, False), pygame.Rect((x, y), (self.frameWidth, self.frameHeight)))
         elif x != None:
-            print(str(x) + " " + str(y));
             surf.blit(self.image, pygame.Rect((x, y), (self.frameWidth, self.frameHeight)))
         else:
             surf.blit(self.image, pygame.Rect((self.x, self.y), (self.frameWidth, self.frameHeight)))

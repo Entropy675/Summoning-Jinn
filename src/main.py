@@ -14,7 +14,7 @@ screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT), pygame.RES
 pygame.display.set_caption("SUMMONING JINN")
 clock = pygame.time.Clock()     ## For syncing the FPS
 
-plr = player.Player(30, 30);
+plr = player.Player(130, 130);
 
 
 levelImg = pygame.image.load("..\\assets\\LevelImages\\Map1.png").convert()
@@ -60,7 +60,9 @@ while running:
     for i in batchDrawUpdate: # update & draw everything in the array (all assets loaded)
         i.update();
         i.draw(screen);
-    
+        
+    # Draw the HUD last so that it goes on top of everything
+    plr.drawHUD(screen);
 
     ## Done after drawing everything to the screen
     pygame.display.flip()       
