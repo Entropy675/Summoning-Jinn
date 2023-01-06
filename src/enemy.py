@@ -8,6 +8,8 @@ import player
 
 class Enemy(entity.Entity):
 
+    attacking = False;
+    range = 0; #range for when goblin will follow player
     currentSprite = 0;
     sprites = []; # basicSprite
     pathPoints = []; # location that it will go

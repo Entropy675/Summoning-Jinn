@@ -1,6 +1,7 @@
 import basicSprite
 import pygame
 import enemy
+import goblin
 
 def loadAssets():
     batchDrawUpdate = [];
@@ -9,6 +10,9 @@ def loadAssets():
     batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\13_vortex_spritesheet.png"), 230, 230, 8, 8, 3, 5))
     batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\14_phantom_spritesheet.png"), 500, 500, 8, 8, 3, 1))
     batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\18_midnight_spritesheet.png"), 400, 400, 8, 8, 3, 1))
+    batchDrawUpdate.append(goblin.Goblin(600, 600));
+    #batchDrawUpdate.append(goblin.Goblin(pygame.image.load("..\\assets\\Sprites\\goblin1V2_summoning_jinn.png"), 700)) 
+
     #assets\GothicCharacters\GPV\Ghost-Files\PNG
     #assets\ has all assets
     return batchDrawUpdate;

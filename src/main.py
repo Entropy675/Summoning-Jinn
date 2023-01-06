@@ -16,6 +16,7 @@ clock = pygame.time.Clock()     ## For syncing the FPS
 
 plr = player.Player(30, 30);
 
+
 levelImg = pygame.image.load("..\\assets\\LevelImages\\Map1.png").convert()
 #level1Img = pygame.transform.scale(level1Img, (1280, 720))
 
