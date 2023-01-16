@@ -80,7 +80,10 @@ while running:
     plr.draw(screen)
     
     for i in batchDrawUpdate: # update & draw everything in the array (all assets loaded)
-        i.update();
+        if(issubclass(type(i), enemy.Enemy)):
+            i.update(plr);
+        else:
+            i.update();
         i.draw(screen);
         
     # Draw the HUD last so that it goes on top of everything

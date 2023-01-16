@@ -19,16 +19,16 @@ class Enemy(entity.Entity):
     def __init__(self):
         super().__init__() # do not create a lone instance of this class
 
-    def sqrDistToPlayer(self, plr): # use this if you can help it because sqrt is a slow operation
-        return math.abs(self.x - p.x)*math.abs(self.x - p.x) + math.abs(self.y - p.y)*math.abs(self.y - p.y); 
+    def sqrDistToPlayer(self, p): # use this if you can help it because sqrt is a slow operation
+        return abs(self.x - p.x)*abs(self.x - p.x) + abs(self.y - p.y)*abs(self.y - p.y); 
     
     def distToPlayer(self, plr): # dont use this if you can help it because it is slow
         return math.sqrt(sqrdDistToPlayer(self, plr));
 
-    def path(self):
+    def path(self, plr):
         pass;
     
-    def attackBehavior(self):
+    def attackBehavior(self, plr):
         pass;
 
     def draw(self, surf):
@@ -47,7 +47,7 @@ class Enemy(entity.Entity):
             self.sprites[self.currentSprite].currentFrameY = 0; # resetting the current frame to the start of the animation loop after switching back to idle
         
 
-    def update(self):
+    def update(self, plr):
         self.sprites[self.currentSprite].update();
         if self.y > self.goToY:
             self.y -= self.speed;

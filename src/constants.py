@@ -17,6 +17,8 @@ PLR_SPEED = 6
 PLR_SPEED_BASE_LIMIT = 16;
 PLR_MAX_HEALTH = 100;
 PLR_MAX_MANA = 100;
+
+
 FPS = 120 #pref
 # Define Colors 
 WHITE = (255, 255, 255)
