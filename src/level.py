@@ -2,14 +2,23 @@ import basicSprite
 import pygame
 import enemy
 import goblin
+import ghost
 
 def loadAssets():
+
+    levelPathPoints = [(250, 250), (500, 500), (400, 400), (900, 500)];
     batchDrawUpdate = [];
-    batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\6_flamelash_spritesheet.png"), 60, 60, 7, 7, 3, 1))
+    
+    batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\sprites\\spinningMana.png"), 60, 60, 8, 8, 4, 1))
     #batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\10_weaponhit_spritesheet.png"), 160, 160, 6, 6, 5, 1)) #USE THIS
     batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\13_vortex_spritesheet.png"), 230, 230, 8, 8, 3, 5))
     batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\14_phantom_spritesheet.png"), 500, 500, 8, 8, 3, 1))
     batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\PixelEffects\\18_midnight_spritesheet.png"), 400, 400, 8, 8, 3, 1))
+    batchDrawUpdate.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\sprites\\summoningCircle.png"), 800, 500, 15, 15, 25, 1))
+    
+    batchDrawUpdate.append(ghost.Ghost(0, -30, levelPathPoints));
+    
+    
     #batchDrawUpdate.append(goblin.Goblin(600, 600));
     #batchDrawUpdate.append(goblin.Goblin(pygame.image.load("..\\assets\\Sprites\\goblin1V2_summoning_jinn.png"), 700)) 
 

@@ -15,8 +15,11 @@ class Goblin(enemy.Enemy):
     sprites = []; # basicSprite
     pathPoints = []; # location that it will go
     
-    def __init__(self, x, y):
+    def __init__(self, x, y, pathPoints):
         self.range = 20
+        self.pathPoints = pathPoints;
+        self.maxPathPoint = len(pathPoints);
+        self.speed = 3;
         
         image = pygame.image.load("..\\assets\\Sprites\\goblin1V2_summoning_jinn.png");
         
@@ -29,9 +32,9 @@ class Goblin(enemy.Enemy):
         self.sprites.append(basicSprite.BasicSprite(image, 0, 0, 3, 1, 0, 16 - self.speed)); # second animation: attack
         self.sprites.append(basicSprite.BasicSprite(image, 0, 0, 3, 1, 0, 16 - self.speed)); # third animation: dash
         
-        super().__init__(x, y) 
+        super().__init__() 
 
-    def path(self):
+    def path(self, plr):
 
         #checks if player is within range of goblin, if true it sets goblin path towards player
         if(self.sqrDistToPlayer(self, plr) < range*range): # range is a variable u declare at the start, represents the pixel range that the player needs to be within for the enemy to start chasing the player
@@ -39,31 +42,31 @@ class Goblin(enemy.Enemy):
             self.goToY = plr.y
             self.attacking = True;
         else:
-            self.goToX = self.pathToPoints[0].x
-            self.goToY = self.pathToPoints[0].y
+            self.goToX = self.pathPoints[0][0]
+            self.goToY = self.pathPoints[0][1]
             self.attacking = False;
             #remove path to points [0] once they have reached it
 
-    def attackBehavior(self):
+    def attackBehavior(self, plr):
         attackType = random.randint(1, 100) #random number between 1 - 100 determines attack type
         
         if(attackType <= 80):
             currentSprite = 0 #80% chance the goblin will walk
         elif(attackType <= 95):
-            if(self.sqrDistToPlayer(self, plr) < meleRange*meleRange):
+            if(self.sqrDistToPlayer(plr) < meleRange*meleRange):
                 currentSprite = 1 #15% chance the goblin will try a basic attack(i think biting would be very funny but that can be for later)
             else:
                 currentSprite = 2 # if cant mele, then dash
         elif(attackType <= 100):
             currentSprite = 2 #5% chance the goblin will dash
         else:
-            self.path(self)
+            self.path(plr)
 
     def draw(self, surf):
         super().draw(surf)
         
 
-    def update(self):
-        super().update()
+    def update(self, plr):
+        super().update(plr)
         if(self.attacking): 
-            self.attackBehavior(self)
+            self.attackBehavior(plr)
