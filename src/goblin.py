@@ -15,8 +15,10 @@ class Goblin(enemy.Enemy):
     sprites = []; # basicSprite
     pathPoints = []; # location that it will go
     
-    def __init__(self, x, y):
+    def __init__(self, x, y, pathPoints):
         self.range = 20
+        self.pathPoints = pathPoints;
+        self.maxPathPoint = len(pathPoints);
         
         image = pygame.image.load("..\\assets\\Sprites\\goblin1V2_summoning_jinn.png");
         

@@ -11,10 +11,12 @@ class Enemy(entity.Entity):
     attacking = False;
     range = 0; #range for when goblin will follow player
     currentSprite = 0;
+    currentPathPoint = 0;
+    maxPathPoint = 0;
     sprites = []; # basicSprite
     pathPoints = []; # location that it will go
     
-    def __init__(self, x, y):
+    def __init__(self):
         super().__init__() # do not create a lone instance of this class
 
     def sqrDistToPlayer(self, plr): # use this if you can help it because sqrt is a slow operation

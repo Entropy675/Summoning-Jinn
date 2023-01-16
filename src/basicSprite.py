@@ -35,7 +35,7 @@ class BasicSprite(pygame.sprite.Sprite):
     
     # Initializes the sprite
     def __init__(self, image, x, y, imfmx, imfmy, os, imgSpeed):
-    
+        # image, x and y position for the image, image frame width, image frame height, ending offset, image speed
         super().__init__() # calls init of pygame.sprite.Sprite object
         self.original_image = image;
         self.image = image
