@@ -34,13 +34,17 @@ while running:
             sys.exit()
         elif event.type == pygame.VIDEORESIZE: # resizable fix
             screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
-            level1X, level1Y = pygame.display.get_surface().get_size()
-            plr.x = level1X/2;
-            plr.goToX = level1X/2;
-            plr.y = level1Y/2;
-            plr.goToY = level1Y/2;
-            level1X = (level1X / 2) - (levelImg.get_width() / 2)
-            level1Y = (level1Y / 2) - (levelImg.get_height() / 2)
+            level1Xt, level1Yt = pygame.display.get_surface().get_size()
+            
+            # idk how tf i fixed this, but with this math the player stays in the same position even when the screen is resized -sib
+            plr.x += ((level1Xt / 2) - (levelImg.get_width() / 2) - level1X);
+            plr.goToX += ((level1Xt / 2) - (levelImg.get_width() / 2) - level1X);
+            plr.y += ((level1Yt / 2) - (levelImg.get_height() / 2) - level1Y);
+            plr.goToY += ((level1Yt / 2) - (levelImg.get_height() / 2) - level1Y);
+            
+            level1X = (level1Xt / 2) - (levelImg.get_width() / 2)
+            level1Y = (level1Yt / 2) - (levelImg.get_height() / 2)
+            
             plr.boundryX = level1X;
             plr.boundryY = level1Y;
         elif event.type == pygame.KEYDOWN:
