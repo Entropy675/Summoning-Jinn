@@ -20,6 +20,8 @@ class Entity(pygame.sprite.Sprite):
     y = 0;    
     goToX = 0;
     goToY = 0;
+    boundryX = 0;
+    boundryY = 0;
     speed = 0; # pix
     rect = None;
     original_image = None;

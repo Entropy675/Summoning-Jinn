@@ -18,6 +18,7 @@ plr = player.Player(130, 130);
 
 
 levelImg = pygame.image.load("..\\assets\\LevelImages\\Map1.png").convert()
+level1X, level1Y = (0,0);
 #level1Img = pygame.transform.scale(level1Img, (1280, 720))
 
 
@@ -27,15 +28,21 @@ running = True
 while running:
     clock.tick(constants.FPS)
     ## will make the loop run at the same speed all the time
-    
     for event in pygame.event.get(): # go through every event in pygame for every frame (whenever event occures, triggeres inside here)
         if event.type == pygame.QUIT:
             running = False
             sys.exit()
         elif event.type == pygame.VIDEORESIZE: # resizable fix
             screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
-            #level1X, level1Y = pygame.display.get_surface().get_size()
-            #level1Img = pygame.transform.scale(level1Img, (level1X, level1Y))
+            level1X, level1Y = pygame.display.get_surface().get_size()
+            plr.x = level1X/2;
+            plr.goToX = level1X/2;
+            plr.y = level1Y/2;
+            plr.goToY = level1Y/2;
+            level1X = (level1X / 2) - (levelImg.get_width() / 2)
+            level1Y = (level1Y / 2) - (levelImg.get_height() / 2)
+            plr.boundryX = level1X;
+            plr.boundryY = level1Y;
         elif event.type == pygame.KEYDOWN:
             plr.keyboardCheckDown(event.key); # for attack when space pressed
             if event.key == pygame.K_ESCAPE:
@@ -51,7 +58,7 @@ while running:
     plr.update()
     
     screen.fill(constants.BLACK)
-    screen.blit(levelImg,(0,0))
+    screen.blit(levelImg, (level1X, level1Y))
     
     #pygame.draw.rect(screen, RED, pygame.Rect(plr.playerX, plr.playerY, 30, 30));
     

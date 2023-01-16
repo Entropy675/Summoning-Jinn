@@ -10,7 +10,7 @@ class Player(entity.Entity):
     
     HUDsprites = [];
     
-    escapePoints = 15;
+    escapeHealthPoints = 15;
     frameCounter = 0
     
     cursorMark = None    #Sprite Click Object
@@ -37,7 +37,7 @@ class Player(entity.Entity):
         self.sprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\GothicCharacters\\GPV\\demon-Files\\PNG\\demon-attack.png"), -35, -30, 11, 0, 0, constants.PLR_SPEED_BASE_LIMIT - self.speed));
         
         # lets loed in the players HUD here too
-        for i in range(self.escapePoints):
+        for i in range(self.escapeHealthPoints):
             self.HUDsprites.append(basicSprite.BasicSprite(pygame.image.load("..\\assets\\sprites\\healthAnimation.png"), random.randint(0, 10), random.randint(0, 10), 11, 11, 1, 4));
             self.HUDsprites[i].currentFrameX = random.randint(0, 10)
             self.HUDsprites[i].currentFrameY = random.randint(0, 10)
@@ -59,10 +59,15 @@ class Player(entity.Entity):
     def keyboardCheckUp(self, event): #When key is up
         pass;
     
-
+    
     def goToPoint(self,cord,screen):# When key is up
-        self.goToX = cord[0] #;
-        self.goToY = cord[1] #;
+        if(cord[0] < self.boundryX or cord[0] > self.boundryX + constants.WIDTH):
+            return -1; # invalid location clicked
+        if(cord[1] < self.boundryY or cord[1] > self.boundryY + constants.HEIGHT):
+            return -1; # invalid location
+            
+        self.goToX = cord[0]
+        self.goToY = cord[1]
         
         if(cord[0] < self.x):
             self.facingLeft = False;
@@ -71,9 +76,9 @@ class Player(entity.Entity):
         
         self.frameCounter = 60
 
-    def removePassPoint(self):
+    def removeHealthPoint(self):
         self.HUDsprites.pop();
-        self.escapePoints -= 1;
+        self.escapeHealthPoints -= 1;
 
     def drawHUD(self, surf):
         # Create a surface for the transparent rect
@@ -88,7 +93,7 @@ class Player(entity.Entity):
         surf.blit(transparent_rect, (localZero[0], localZero[1]))
 
         font = pygame.font.Font(None, 36)  # use default font, size 36
-        textsurf = font.render("x" + str(self.escapePoints), True, constants.WHITE)
+        textsurf = font.render("x" + str(self.escapeHealthPoints), True, constants.WHITE)
         
         surf.blit(textsurf, (localZero[0] + 40, localZero[1] + 30));
         
