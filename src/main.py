@@ -6,6 +6,7 @@ import level
 import enemy
 import constants
 import sys
+import entity
 
 ## initialize pygame and create window
 pygame.init()
@@ -37,10 +38,20 @@ while running:
             level1Xt, level1Yt = pygame.display.get_surface().get_size()
             
             # idk how tf i fixed this, but with this math the player stays in the same position even when the screen is resized -sib
-            plr.x += ((level1Xt / 2) - (levelImg.get_width() / 2) - level1X);
-            plr.goToX += ((level1Xt / 2) - (levelImg.get_width() / 2) - level1X);
-            plr.y += ((level1Yt / 2) - (levelImg.get_height() / 2) - level1Y);
-            plr.goToY += ((level1Yt / 2) - (levelImg.get_height() / 2) - level1Y);
+            plr.x += (level1Xt / 2) - (levelImg.get_width() / 2) - level1X; # keep in mind the negative values matter for when going from bigger screen to smaller
+            plr.goToX += (level1Xt / 2) - (levelImg.get_width() / 2) - level1X;
+            plr.y += (level1Yt / 2) - (levelImg.get_height() / 2) - level1Y;
+            plr.goToY += (level1Yt / 2) - (levelImg.get_height() / 2) - level1Y;
+            
+            for i in batchDrawUpdate:
+                if(issubclass(type(i), entity.Entity)): # theoretically this should fix each entity (monster or enemy or anything) inside of the batchDrawUpdate array following above logic
+                    i.x += (level1Xt / 2) - (levelImg.get_width() / 2) - level1X; # player is not inside of this array so we do it seperately above
+                    i.goToX += (level1Xt / 2) - (levelImg.get_width() / 2) - level1X;
+                    i.y += (level1Yt / 2) - (levelImg.get_height() / 2) - level1Y;
+                    i.goToY += (level1Yt / 2) - (levelImg.get_height() / 2) - level1Y;
+                if(issubclass(type(i), basicSprite.BasicSprite)): # this should fix the sprite effects to be in the right locations on resize
+                    i.x += (level1Xt / 2) - (levelImg.get_width() / 2) - level1X; 
+                    i.y += (level1Yt / 2) - (levelImg.get_height() / 2) - level1Y;
             
             level1X = (level1Xt / 2) - (levelImg.get_width() / 2)
             level1Y = (level1Yt / 2) - (levelImg.get_height() / 2)
