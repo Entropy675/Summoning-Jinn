@@ -5,55 +5,49 @@ import basicSprite
 import level
 import entity
 import player
-# pygame.sprite.Sprite
-# https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
-# this class imports from the simple visible game objects base class in pygame
-# ask me before messing with this class if you don't remember how pygame works, i'll show you. - SIB
 
 class Enemy(entity.Entity):
 
+    attacking = False;
+    range = 0; #range for when goblin will follow player
     currentSprite = 0;
+    currentPathPoint = 0;
+    maxPathPoint = 0;
     sprites = []; # basicSprite
     pathPoints = []; # location that it will go
     
-    def __init__(self, x, y):
+    def __init__(self):
         super().__init__() # do not create a lone instance of this class
 
-    def sqrDistToPlayer(self, plr): # use this if you can help it because sqrt is a slow operation
-        return math.abs(self.x - p.x)*math.abs(self.x - p.x) + math.abs(self.y - p.y)*math.abs(self.y - p.y); 
+    def sqrDistToPlayer(self, p): # use this if you can help it because sqrt is a slow operation
+        return abs(self.x - p.x)*abs(self.x - p.x) + abs(self.y - p.y)*abs(self.y - p.y); 
     
     def distToPlayer(self, plr): # dont use this if you can help it because it is slow
         return math.sqrt(sqrdDistToPlayer(self, plr));
 
-    def pathToPlayer(self):
+    def path(self, plr):
         pass;
     
-    def pathToGoal(self):
-        pass;
-    
-    def attackBehavior(self):
+    def attackBehavior(self, plr):
         pass;
 
     def draw(self, surf):
 
         doneframe = None; # doneframe returns true when done animation
         
-        self.sprites[self.currentSprite].update();
-        
         if(self.facingLeft):
             doneframe = self.sprites[self.currentSprite].draw(surf, self.x + self.sprites[self.currentSprite].x - self.sprites[self.currentSprite].rect.width/2, self.y + self.sprites[self.currentSprite].y - self.sprites[self.currentSprite].rect.height/2, True);
         else:
             doneframe = self.sprites[self.currentSprite].draw(surf, self.x + self.sprites[self.currentSprite].x  - self.sprites[self.currentSprite].rect.width/2, self.y + self.sprites[self.currentSprite].y - self.sprites[self.currentSprite].rect.height/2);
-        #self.clip(self.image, self.frameWidth*self.currentFrameX, self.frameHeight*self.currentFrameY, self.frameWidth, self.frameHeight) 
-        #surf.blit(self.image, pygame.Rect((self.x, self.y), (self.w, self.h))) #- self.w/2 - self.h/2
         
-        if(doneframe):
-            self.currentSprite = 0; #default sprite, either plr is running -> done = default sprite (idle), or plr is attacking -> done = default sprite (idle).
+        if(doneframe): # if we are on the last frame of the animation
+            if(self.currentSprite != 0 or self.currentSprite != 1):
+                self.currentSprite = 0; # set the current sprite to 0 if we are not on idle or movement sprite, this resets attack animations when done
             self.sprites[self.currentSprite].currentFrameX = 0;
             self.sprites[self.currentSprite].currentFrameY = 0; # resetting the current frame to the start of the animation loop after switching back to idle
         
 
-    def update(self):
+    def update(self, plr):
         self.sprites[self.currentSprite].update();
         if self.y > self.goToY:
             self.y -= self.speed;
