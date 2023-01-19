@@ -51,6 +51,7 @@ class Player(entity.Entity):
     def keyboardCheckDown(self, event): #When key is up
         if event == pygame.K_SPACE:
             if(self.currentSprite == 0):
+                self.mana -= 10;
                 self.currentSprite = 1;
             self.sprites[self.currentSprite].currentFrameX = 0;
             self.sprites[self.currentSprite].currentFrameY = 0;

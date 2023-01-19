@@ -16,7 +16,7 @@ class Ghost(enemy.Enemy):
     pathPoints = []; # location that it will go
     
     def __init__(self, x, y, pathPoints):
-        self.range = 20
+        self.range = 200
         self.pathPoints = pathPoints;
         self.maxPathPoint = len(pathPoints);
         self.speed = 1;
@@ -91,7 +91,8 @@ class Ghost(enemy.Enemy):
             self.x -= self.speed;
         if self.x < self.goToX:
             self.x += self.speed;
-        print(str(self.x) + " " + str(self.y) + " goto " + str(self.goToX) + " " + str(self.goToY))
+        #print(str(self.x) + " " + str(self.y) + " goto " + str(self.goToX) + " " + str(self.goToY))
+        # indicator for changing value : current problem can be resolved with ranges
         self.path(plr)
         if(self.attacking): 
             self.attackBehavior(plr)
